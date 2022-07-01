@@ -38,6 +38,8 @@ public class ClientFormChatApp extends javax.swing.JFrame {
     int clients;
     HashMap<Integer, String> onlineUsers;
     ArrayList<Integer> newChatRoomUsers;
+    static int port;
+    static String add;
     
     /**
      * Creates new form ClientFormChatApp
@@ -339,6 +341,9 @@ public class ClientFormChatApp extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ClientFormChatApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        add = args[0];
+        port = Integer.parseInt(args[1]);
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
@@ -398,7 +403,7 @@ public class ClientFormChatApp extends javax.swing.JFrame {
             username = Rules.legalizeUsername(username);
             if(!Rules.isUsernameLegal(username)) return;
             
-            client = new ClientUser(this);
+            client = new ClientUser(this, port, add);
             client.ConnectToServer(username);
             connectButton.setEnabled(false);
             usernameTextField.setFocusable(false);

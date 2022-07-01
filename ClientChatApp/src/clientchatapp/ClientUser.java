@@ -24,24 +24,30 @@ public class ClientUser {
     private BufferedInputStream buffIn;
     private BufferedOutputStream buffOut;
     private int id;
-    
+    private int port;
+    private String add;
     
     private HashMap<Integer, String> users;
     private HashMap<Integer, String> rooms;
     
     private final ClientFormChatApp clientForm;
     
-    public ClientUser(ClientFormChatApp clientForm) throws IOException{
+    public ClientUser(ClientFormChatApp clientForm, int port, String add) throws IOException{
         this.clientForm = clientForm;
         id = -1;
         users = new HashMap<>();
         rooms = new HashMap<>();
+        this.port = port;
+        this.add = add;
     }
-    public ClientUser(){
+    public ClientUser(int port, String add){
         this.clientForm = null;
         id = -1;
         users = new HashMap<>();
         rooms = new HashMap<>();
+        
+        this.port = port;
+        this.add = add;
     }
     
     public boolean isConnected(){ return socket.isConnected(); }
@@ -53,7 +59,7 @@ public class ClientUser {
             //socket.connect(endpoint);
         //}
         System.out.println("Trying to conect");
-        socket = new Socket("27.0.11.194", 7000);
+        socket = new Socket(add, port);
         
         buffIn = new BufferedInputStream(socket.getInputStream());
         buffOut = new BufferedOutputStream(socket.getOutputStream());
